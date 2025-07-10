@@ -40,7 +40,7 @@ other standard: HL7
 
 [https://github.com/darena-solutions/darena-health-community-mcp]
 
-- in LLM way to connect to FHIR server is via MCP tool
+- in LLM, way to connect to FHIR server is via MCP tool
   - read FHIR server, retrieve patient details
   - got birthday -> calculate bday
 - can find MCP tool in open source DH repo (GitHub)
