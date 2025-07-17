@@ -39,13 +39,13 @@ This custom MCP server is based off of [Darena Health's default MCP Health Commu
 
 ### File structure
 
-- MCP tools (context functions for LLM): [darena-solutions/mcp-tools](darena-solutions/mcp-tools)
-- FHIR server wrapper for context: [darena-solutions/fhir-utilities.ts](darena-solutions/fhir-utilities.ts)
+- MCP tools (context functions for LLM): [fhir-crud/mcp-tools](fhir-crud/mcp-tools)
+- FHIR server wrapper for context: [fhir-crud/fhir-utilities.ts](fhir-crud/fhir-utilities.ts)
 
 ### Running Locally
 
 1. Install [NPM][1] and install/update [Node][2]
-2. Run `cd server/darena-solutions` to navigate to the mcp server directory
+2. Run `cd server/fhir-crud` to navigate to the mcp server directory
 3. Run `npm install` to install all dependencies onto the project
 4. Run `npm start` to start the server on **port 5000** of localhost
 

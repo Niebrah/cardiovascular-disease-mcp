@@ -20,6 +20,7 @@ app.post("/", async (req, res) => {
       version: "1.0.0",
     });
 
+    // Loops through all tools in mcp-tools
     for (const tool of Object.values<IMcpTool>(tools)) {
       tool.registerTool(server, req);
     }
