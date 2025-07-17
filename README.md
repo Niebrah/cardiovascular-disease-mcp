@@ -56,10 +56,10 @@ For local development, use ngrok for creating a quick endpoint for your local MC
 1. Install [ngrok][3] and create an auth token by making an account
 2. In your terminal, run `ngrok http http://localhost:5000`
 3. Copy the ngrok forwarded URL (highlighted below)
-   ![Terminal](.github\terminal-1.png)
+   ![Terminal](.github/terminal-1.png)
 4. In MeldRx, navigate to your `workspace -> AI -> MCP Servers` and click `Add External MCP Server`
 5. Input the fields as outlined below and click `Test` and `Save`
-   ![MeldRx MCP servers form](.github\meldrx-1.png)
+   ![MeldRx MCP servers page](.github/meldrx-1.png)
 
 [1]: https://github.com/npm/npm#super-easy-install
 [2]: https://nodejs.org/en/download/
