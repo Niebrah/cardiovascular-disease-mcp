@@ -9,7 +9,7 @@ export const mcpServerConfig = {
   context: [
     {
       type: "repo",
-      url: "https://github.com/jamesdinh/ascvd-risk-calculator",
+      url: "https://github.com/jamesvdinh/cardiovascular-disease-mcp",
       includeFiles: ["README.md", "model/risk_score.py"],
     },
   ],
