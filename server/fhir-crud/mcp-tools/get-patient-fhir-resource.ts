@@ -21,19 +21,13 @@ type Bundle = {
   entry: BundleEntry[];
 };
 
-export class GetConditionsTool implements IMcpTool {
-  /*
-    This function retrieves the conditions of a patient from a FHIR server.
-    If the patient context already exists, it uses that context and sends it
-    to the MCP server; otherwise, it requires a patient ID to fetch the
-    conditions.
-    */
+export class GetFhirResourceTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
     server.tool(
-      "get_patient_conditions", // name of tool
-      "Finds the conditions of a patient and returns it as an array. If patient context " + // description for llm to recognize
-        "already exists, then the patient ID is not required. Otherwise, the patient " +
-        "ID is required.",
+      "get_patient_fhir_resource", // name of tool
+      "Finds the FHIR resource (EG: Patient, Encounter, Observation, etc.) of a patient" +
+        "and returns it as an array. If patient context already exists, then the patient" +
+        "ID is not required. Otherwise, the patient ID is required.",
       {
         patientID: z
           .string()
@@ -41,8 +35,14 @@ export class GetConditionsTool implements IMcpTool {
           .describe(
             "The patient id. Optional if patient context exists. Required otherwise."
           ),
+        resourceType: z
+          .string()
+          .describe(
+            "The FHIR resource type to retrieve (EG: Condition, Observation, etc.)." +
+              "This should be a valid FHIR resource type."
+          ),
       },
-      async ({ patientID }) => {
+      async ({ patientID, resourceType }) => {
         // handler for tool
         const fhirContext = getFhirContext(req);
         if (!fhirContext) {
@@ -63,7 +63,7 @@ export class GetConditionsTool implements IMcpTool {
         }
 
         const response = await axios.get<Bundle>(
-          `${fhirContext.url}/Condition?patient=${
+          `${fhirContext.url}/${resourceType}?patient=${
             patientIdContext || patientID
           }`,
           {
@@ -89,4 +89,4 @@ export class GetConditionsTool implements IMcpTool {
   }
 }
 
-export const GetConditionsToolInstance = new GetConditionsTool();
+export const GetFhirResourceToolInstance = new GetFhirResourceTool();
