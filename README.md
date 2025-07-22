@@ -5,6 +5,7 @@ An open source repository containing a CVD risk model predictor and an external 
 ## Quick Setup
 
 1. Open terminal and run this command to clone the repository
+
    ```bash
    git clone https://github.com/jamesvdinh/cardiovascular-disease-mcp.git
    ```
@@ -49,6 +50,22 @@ This custom MCP server is based off of [Darena Health's default MCP Health Commu
 3. Run `npm install` to install all dependencies onto the project
 4. Run `npm start` to start the server on **port 5000** of localhost
 
+<details>
+<summary>Running on a Docker Container</summary>
+
+### Running on a Docker Container
+
+1. Install [Docker Desktop][5]
+2. In terminal, run this to create a docker image
+
+   ```bash
+   docker build -t cvd-mcp ./server/fhir-crud/
+   ```
+3. In Docker Desktop, go to the Images tab run the image on **port 5000**
+
+   ![Docker Desktop - Images](.github/docker-desktop.png)
+</details>
+
 ### Creating a web-facing API endpoint
 
 For local development, use ngrok for creating a quick endpoint for your local MCP server.
@@ -56,12 +73,15 @@ For local development, use ngrok for creating a quick endpoint for your local MC
 1. Install [ngrok][3] and create an auth token by making an account
 2. In your terminal, run `ngrok http http://localhost:5000`
 3. Copy the ngrok forwarded URL (highlighted below)
+
    ![Terminal](.github/terminal-1.png)
 4. In MeldRx, navigate to your `workspace -> AI -> MCP Servers` and click `Add External MCP Server`
 5. Input the fields as outlined below and click `Test` and `Save`
+
    ![MeldRx MCP servers page](.github/meldrx-1.png)
 
 [1]: https://github.com/npm/npm#super-easy-install
 [2]: https://nodejs.org/en/download/
 [3]: https://download.ngrok.com/
 [4]: https://code.visualstudio.com/Download
+[5]: https://www.docker.com/products/docker-desktop/
