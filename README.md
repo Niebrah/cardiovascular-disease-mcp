@@ -61,7 +61,7 @@ This custom MCP server is based off of [Darena Health's default MCP Health Commu
    ```bash
    docker build -t cvd-mcp ./server/fhir-crud/
    ```
-3. In Docker Desktop, go to the Images tab run the image on **port 5000**
+3. In Docker Desktop, go to the Images tab and run the image on **port 5000**
 
    ![Docker Desktop - Images](.github/docker-desktop.png)
 </details>
