@@ -1,20 +1,4 @@
-type Conditions = {
-  hypertensive: boolean;
-  smoker: boolean;
-  diabetic: boolean;
-};
-
-type Patient = {
-  name: string;
-  age: number;
-  gender: string;
-  race: string;
-  bmi: number;
-  totalCholesterol: number;
-  hdl: number;
-  systolicBloodPressure: number;
-  conditions: Conditions;
-};
+import { Patient } from "./patient";
 
 /**
  * Computes the ASCVD Risk Estimate for an individual over the next 10 years.
@@ -22,7 +6,7 @@ type Patient = {
  * @returns {*} Returns the risk score or null if not in the appropriate age range
  */
 
-const computeTenYearScore = (patientInfo: Patient) => {
+const calculateCVDRisk = (patientInfo: Patient) => {
   if (patientInfo.age < 40 || patientInfo.age > 79) {
     return null;
   }
@@ -110,4 +94,4 @@ const computeTenYearScore = (patientInfo: Patient) => {
   return calculateScore();
 };
 
-export default computeTenYearScore;
+export default calculateCVDRisk;

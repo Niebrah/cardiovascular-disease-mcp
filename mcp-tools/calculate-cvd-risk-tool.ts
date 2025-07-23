@@ -5,6 +5,11 @@ import axios from "axios";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { Request } from "express";
 import { IMcpTool } from "../IMcpTool";
+import { Patient } from "../utils/patient";
+import { getPatientSex, getPatientAge, getPatientRace } from "../utils/patient-demographics";
+import { getPatientCholesterol, getPatientHDL, getPatientSystolicBloodPressure } from "../utils/patient-vitals";
+import { getPatientDiabetesStatus, getPatientSmokingStatus, getPatientHypertensionStatus } from "../utils/patient-conditions";
+import calculateCVDRisk from "../utils/calculate-cvd-risk";
 
 class CalculateCvdRiskTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
@@ -38,21 +43,32 @@ class CalculateCvdRiskTool implements IMcpTool {
         : await getObservationsByPatient(fhirContext, patientId);
 
         // Helper functions to parse fields
-        const age = getAgeFromPatient(patient);
+        const age = getPatientAge(patientResource);
+        const gender = getPatientSex(patientResource);
+        const race = getPatientRace(patientResource);
         const bmi = getBMIFromObservations(observations);
-        const systolicBP = getBPFromObservations(observations);
-        const smoker = getSmokingStatus(observations);
-        const diabetic = getConditionStatus(observations, "diabetes");
-
-        const input = {
+        const totalCholesterol = getPatientCholesterol(observations);
+        const hdl = getPatientHDL(observations);
+        const systolicBloodPressure = getPatientSystolicBloodPressure(observations);
+        const conditions = {
+          smoker: getPatientSmokingStatus(observations),
+          diabetic: getPatientDiabetesStatus(observations),
+          hypertensive: getPatientHypertensionStatus(observations),
+        };
+        
+        const patient: Patient = {
+          name: patientResource.name?.[0]?.text ?? "Unknown",
           age,
+          gender,
+          race,
           bmi,
-          systolicBloodPressure: systolicBP,
-          conditions: { smoker, diabetic, hypertensive: false },
-          // other fields
+          totalCholesterol,
+          hdl,
+          systolicBloodPressure,
+          conditions,
         };
 
-        const result = runRiskModel(input); // <- your imported function
+        const result = calculateCVDRisk(patient); // <- your imported function
         return createTextResponse(`Predicted risk score: ${result}`);
       }
     );
