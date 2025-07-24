@@ -2,24 +2,8 @@ import { IMcpTool } from "../IMcpTool";
 import { z } from "zod";
 import { createTextResponse } from "../mcp-utilities";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
-import { getFhirContext, getPatientIdIfContextExists } from "../fhir-utilities";
+import { getFhirContext, getFhirResource, getPatientIdIfContextExists } from "../fhir-utilities";
 import { Request } from "express";
-import axios from "axios";
-
-type BundleEntry = {
-  resource: {
-    id: string;
-    code: {
-      coding: {
-        display: string;
-      }[];
-    };
-  };
-};
-
-type Bundle = {
-  entry: BundleEntry[];
-};
 
 export class GetFhirResourceTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
@@ -54,33 +38,28 @@ export class GetFhirResourceTool implements IMcpTool {
 
         // if the patient has an ID, it can be supplied to the MCP server
         const patientIdContext = getPatientIdIfContextExists(req);
-        if (!patientIdContext && !patientID) {
-          // if patient ID is not provided and no context exists (LLM could not find ID)
+        const effectivePatientId = patientIdContext || patientID; // patientIdContext if exists, otherwise use patientID
+        if (!effectivePatientId) {
           return createTextResponse(
-            "No patient context found, an ID is required to fetch conditions.",
+            "No patient ID provided or found in context.",
             { isError: true }
           );
         }
 
-        const response = await axios.get<Bundle>(
-          `${fhirContext.url}/${resourceType}?patient=${
-            patientIdContext || patientID
-          }`,
-          {
-            headers: {
-              Authorization: `Bearer ${fhirContext.token}`,
-            },
-          }
+        const data = await getFhirResource(
+          fhirContext,
+          resourceType,
+          effectivePatientId
         );
 
-        if (!response.data.entry?.length) {
+        if (!data.entry?.length) {
           return createTextResponse("No conditions found for the patient.", {
             isError: true,
           });
         }
 
-        const displayValues = response.data.entry
-          .map((x) => x.resource.code.coding.map((y) => y.display))
+        const displayValues = data.entry
+          .map((x) => x.resource.code?.coding?.map((y) => y.display) || [])
           .reduce((a, b) => a.concat(b), []);
 
         return createTextResponse(JSON.stringify(displayValues));

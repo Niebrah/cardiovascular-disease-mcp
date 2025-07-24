@@ -16,7 +16,7 @@ class GetPatientAttributeTool implements IMcpTool {
           .enum(["name", "weight", "height", "race"])
           .describe("The field to retrieve for the patient"),
       },
-      async ({ field }, extra) => {
+      async ({ field }) => {
         const fhirContext = getFhirContext(req);
         if (!fhirContext) {
           return createTextResponse(

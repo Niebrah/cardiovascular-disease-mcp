@@ -6,6 +6,8 @@ import {
   PatientIdHeaderName,
 } from "./mcp-constants";
 import * as jose from "jose";
+import axios from "axios";
+import { Bundle } from "./utils/bundle";
 
 export function getFhirContext(req: Request): FhirContext | null {
   const headers = req.headers;
@@ -33,4 +35,21 @@ export function getPatientIdIfContextExists(req: Request) {
   }
 
   return req.headers[PatientIdHeaderName]?.toString() || null;
+}
+
+export async function getFhirResource(
+  fhirContext: FhirContext,
+  resourceType: string,
+  patientId: string
+): Promise<Bundle> {
+  const response = await axios.get<Bundle>(
+    `${fhirContext.url}/${resourceType}?patient=${patientId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${fhirContext.token}`,
+      },
+    }
+  );
+
+  return response.data;
 }
