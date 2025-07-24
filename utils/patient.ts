@@ -9,7 +9,6 @@ export type Patient = {
   age: number;
   gender: string;
   race: string;
-  bmi: number;
   totalCholesterol: number;
   hdl: number;
   systolicBloodPressure: number;

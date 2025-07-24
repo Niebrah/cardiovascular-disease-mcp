@@ -32,7 +32,7 @@ the following are a number of factors required to calculate an estimated ASCVD r
 The risk scores calculated by this tool and
 any recommendations provided are intended to inform, and should not supersede any findings or opinions by a care provider.
 
-The file associated with the model calculation is located in [model/risk_score.py](model/risk_score.py)
+The file associated with the model calculation is located in [mcp-tools/calculate-cvd-risk-tool](/mcp-tools/calculate-cvd-risk-tool)
 
 ## MCP server
 
@@ -40,8 +40,8 @@ This custom MCP server is based off of [Darena Health's default MCP Health Commu
 
 ### File structure
 
-- MCP tools (context functions for LLM): [fhir-crud/mcp-tools](fhir-crud/mcp-tools)
-- FHIR server wrapper for context: [fhir-crud/fhir-utilities.ts](fhir-crud/fhir-utilities.ts)
+- MCP tools (context functions for LLM): [/mcp-tools](/mcp-tools)
+- FHIR server wrapper for context: [fhir-utilities.ts](./fhir-utilities.ts)
 
 ### Running Locally
 
@@ -51,19 +51,16 @@ This custom MCP server is based off of [Darena Health's default MCP Health Commu
 4. Run `npm start` to start the server on **port 5000** of localhost
 
 <details>
-<summary>Running on a Docker Container</summary>
+<summary>Running on Docker</summary>
 
-### Running on a Docker Container
+### Running on Docker
 
 1. Install [Docker Desktop][5]
-2. In terminal, run this to create a docker image
+2. In terminal, run this to create a docker image and run the container
 
    ```bash
-   docker build -t cvd-mcp ./server/fhir-crud/
+   docker-compose up --build
    ```
-3. In Docker Desktop, go to the Images tab and run the image on **port 5000**
-
-   ![Docker Desktop - Images](.github/docker-desktop.png)
 </details>
 
 ### Creating a web-facing API endpoint

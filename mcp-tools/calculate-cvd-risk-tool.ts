@@ -7,7 +7,7 @@ import { Request } from "express";
 import { IMcpTool } from "../IMcpTool";
 import { Patient } from "../utils/patient";
 import { getPatientSex, getPatientAge, getPatientRace, getPatientName } from "../utils/patient-demographics";
-import { getPatientCholesterol, getPatientHDL, getPatientSystolicBloodPressure, getPatientBMI } from "../utils/patient-vitals";
+import { getPatientCholesterol, getPatientHDL, getPatientSystolicBloodPressure } from "../utils/patient-vitals";
 import { getPatientDiabetesStatus, getPatientSmokingStatus, getPatientHypertensionStatus } from "../utils/patient-conditions";
 import calculateCVDRisk from "../utils/calculate-cvd-risk";
 
@@ -18,7 +18,6 @@ class CalculateCvdRiskTool implements IMcpTool {
       "Calculates the cardiovascular disease (CVD) 10-year risk based on patient attributes (Sex, Age, Race, Total Cholesterol, HDL - Cholesterol, Systolic Blood Pressure, Diabetes status, Current Smoking status, Treatment for Hypertension status).",
       {
         patientID: z.string(),
-        observationBundleId: z.string().optional(),
       },
       async ({ patientID }) => {
         const fhirContext = getFhirContext(req);
@@ -70,7 +69,6 @@ class CalculateCvdRiskTool implements IMcpTool {
         const age = getPatientAge(patientResource);
         const gender = getPatientSex(patientResource);
         const race = getPatientRace(patientResource).join(", ");
-        const bmi = getPatientBMI(observations);
         const totalCholesterol = getPatientCholesterol(observations);
         const hdl = getPatientHDL(observations);
         const systolicBloodPressure = getPatientSystolicBloodPressure(observations);
@@ -85,7 +83,6 @@ class CalculateCvdRiskTool implements IMcpTool {
           age,
           gender,
           race,
-          bmi,
           totalCholesterol,
           hdl,
           systolicBloodPressure,
@@ -93,8 +90,7 @@ class CalculateCvdRiskTool implements IMcpTool {
         };
 
         const result = calculateCVDRisk(patient);
-        // return createTextResponse(`Predicted 10-year Cardiovascular Disease risk score: ${result}`);
-        return createTextResponse(patient.toString(), { isError: false });
+        return createTextResponse(`Predicted 10-year Cardiovascular Disease risk score: ${result} for patient ${patient.toString()}.`,);
       }
     );
   }

@@ -1,5 +1,5 @@
 /*
-    Total Cholesterol, HDL - Cholesterol, Systolic Blood Pressure, BMI
+    Total Cholesterol, HDL - Cholesterol, Systolic Blood Pressure
 */
 
 export function getPatientCholesterol(patient: any): number {
@@ -11,9 +11,5 @@ export function getPatientHDL(patient: any): number {
 }
 
 export function getPatientSystolicBloodPressure(patient: any): number {
-    return 0;
-}
-
-export function getPatientBMI(patient: any): number {
     return 0;
 }
