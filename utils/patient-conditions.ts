@@ -2,14 +2,14 @@
     Diabetes status, Smoking status, Hypertension status
 */
 
-export function getPatientDiabetesStatus(patient: any): boolean {
+export function getPatientDiabetesStatus(observations: any): boolean {
     return false;
 }
 
-export function getPatientSmokingStatus(patient: any): boolean {
+export function getPatientSmokingStatus(observations: any): boolean {
     return false;
 }
 
-export function getPatientHypertensionStatus(patient: any): boolean {
+export function getPatientHypertensionStatus(observations: any): boolean {
     return false;
 }

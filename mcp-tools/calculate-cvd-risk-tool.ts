@@ -78,16 +78,16 @@ class CalculateCvdRiskTool implements IMcpTool {
         )
           .then((res) => {
             if (!res.entry?.length) {
-              return null;
+              return [];
             }
-
-            return res.entry
-              .map((x) => x.resource.code?.coding?.map((y) => y.display) || [])
-              .reduce((a, b) => a.concat(b), []);
+            return res.entry.map((x) => x.resource);
+            // return res.entry
+            //   .map((x) => x.resource.code?.coding?.map((y) => y.display) || [])
+            //   .reduce((a, b) => a.concat(b), []);
           })
           .catch((error) => {
             console.error("Error fetching observations:", error);
-            return null;
+            return [];
           });
         console.log("observations:", observations);
 
