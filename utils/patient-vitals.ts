@@ -2,30 +2,42 @@
     Total Cholesterol, HDL - Cholesterol, Systolic Blood Pressure
 */
 
-const LOINC_CODES = {
-  cholesterol: "2093-3", // Cholesterol [Mass/volume] in Serum or Plasma
-  hdl: "2085-9", // Cholesterol in HDL [Mass/volume] in Serum or Plasma
-  systolicBloodPressure: "8480-6", // Systolic blood pressure
+const vitalsLookup = {
+  cholesterol: {
+    loinc: "2093-3",
+    default: 200,
+  },
+  hdl: {
+    loinc: "2085-9",
+    default: 50,
+  },
+  systolicBloodPressure: {
+    loinc: "8480-6",
+    default: 120,
+  },
 };
 
-function findObservationValue(observations: any[], loincCode: string): number {
+function getObservationVal(
+  observations: any[],
+  vitalKey: keyof typeof vitalsLookup
+): number {
+  const { loinc, default: defaultValue } = vitalsLookup[vitalKey];
+
   for (const obs of observations) {
-    const codings = obs.code?.coding || [];
-    if (codings.some((coding: any) => coding.code === loincCode)) {
-      return obs.valueQuantity?.value ?? 0;
+    const codes = obs.code?.coding ?? [];
+    if (codes.some((code: any) => code.code === loinc)) {
+      return obs.valueQuantity?.value ?? defaultValue;
     }
   }
-  return 0;
+
+  return defaultValue;
 }
 
-export function getPatientCholesterol(observations: any[]): number {
-  return findObservationValue(observations, LOINC_CODES.cholesterol);
-}
+export const getPatientCholesterol = (obs: any[]) =>
+  getObservationVal(obs, "cholesterol");
 
-export function getPatientHDL(observations: any[]): number {
-  return findObservationValue(observations, LOINC_CODES.hdl);
-}
+export const getPatientHDL = (obs: any[]) =>
+  getObservationVal(obs, "hdl");
 
-export function getPatientSystolicBloodPressure(observations: any[]): number {
-  return findObservationValue(observations, LOINC_CODES.systolicBloodPressure);
-}
+export const getPatientSystolicBloodPressure = (obs: any[]) =>
+  getObservationVal(obs, "systolicBloodPressure");
