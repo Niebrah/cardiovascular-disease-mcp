@@ -91,7 +91,7 @@ class CalculateCvdRiskTool implements IMcpTool {
           });
         console.log("observations:", observations);
 
-        const conditions = await getFhirResource(
+        const conditionsRes = await getFhirResource(
           fhirContext,
           "Condition",
           effectivePatientId
@@ -119,9 +119,9 @@ class CalculateCvdRiskTool implements IMcpTool {
           const systolicBloodPressure =
             getPatientSystolicBloodPressure(observations);
           const conditions = {
-            smoker: getPatientSmokingStatus(observations),
-            diabetic: getPatientDiabetesStatus(observations),
-            hypertensive: getPatientHypertensionStatus(observations),
+            smoker: getPatientSmokingStatus(conditionsRes),
+            diabetic: getPatientDiabetesStatus(conditionsRes),
+            hypertensive: getPatientHypertensionStatus(conditionsRes),
           };
 
           const patient: Patient = {
