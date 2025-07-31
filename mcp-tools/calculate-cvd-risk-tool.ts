@@ -91,6 +91,23 @@ class CalculateCvdRiskTool implements IMcpTool {
           });
         console.log("observations:", observations);
 
+        const conditions = await getFhirResource(
+          fhirContext,
+          "Condition",
+          effectivePatientId
+        )
+          .then((res) => {
+            if (!res.entry?.length) {
+              return [];
+            }
+            return res.entry.map((x) => x.resource);
+          })
+          .catch((error) => {
+            console.error("Error fetching conditions:", error);
+            return [];
+          });
+
+
         try {
           // Helper functions to parse fields
           const name = getPatientName(patientResource);
