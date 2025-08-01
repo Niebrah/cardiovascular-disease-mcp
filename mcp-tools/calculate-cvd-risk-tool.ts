@@ -129,12 +129,12 @@ class CalculateCvdRiskTool implements IMcpTool {
           };
 
           const result = calculateCVDRisk(patient);
-          // if (result === null) {
-          //   return createTextResponse(
-          //     `The patient's age (${age}) is outside the valid range for CVD risk calculation (40-79 years).`,
-          //     { isError: true }
-          //   );
-          // }
+          if (result === null) {
+            return createTextResponse(
+              `The patient's age (${age}) is outside the valid range for CVD risk calculation (40-79 years).`,
+              { isError: true }
+            );
+          }
           console.log("calculated risk:", result);
           return createTextResponse(
             `${name}'s predicted 10-year Cardiovascular Disease risk score: ${result}%.\n\n` +

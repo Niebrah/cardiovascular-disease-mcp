@@ -15,7 +15,7 @@ An open source repository containing a CVD risk model predictor and an external 
 
 ## CVD Risk Model
 
-Utilizes the risk model from Oracle Health's [ascvd-risk-calculator](https://github.com/cerner/ascvd-risk-calculator/tree/master) and the [2013 ACC/AHA Guideline on the Treatment of Blood Cholesterol to Reduce Atherosclerotic Cardiovascular Risk in Adults](http://circ.ahajournals.org/content/circulationaha/129/25_suppl_2/S1.full.pdf) study.
+Utilizes the risk model from Oracle Health's [ascvd-risk-calculator](https://github.com/cerner/ascvd-risk-calculator/tree/master) which is based off of the Pooled Cohort Equations and lifetime risk prediction tools. This calculator follows the [2013 ACC/AHA Guideline on the Treatment of Blood Cholesterol to Reduce Atherosclerotic Cardiovascular Risk in Adults](http://circ.ahajournals.org/content/circulationaha/129/25_suppl_2/S1.full.pdf).
 
 This tool is intended for those with an assumed LDL - Cholesterol < 190 mg/dL, and
 the following are a number of factors required to calculate an estimated ASCVD risk:
@@ -34,6 +34,10 @@ The risk scores calculated by this tool and
 any recommendations provided are intended to inform, and should not supersede any findings or opinions by a care provider.
 
 The file associated with the model calculation is located in [mcp-tools/calculate-cvd-risk-tool](/mcp-tools/calculate-cvd-risk-tool)
+
+### 10-year ASCVD Risk
+
+The 10-year risk estimate provided by this application is primarily applicable towards African-American and non-Hispanic white men and women between the ages of 40 and 79 years. Other ethnic groups will have their score calculated with the same equation for non-Hispanic white men and women, though the score estimated may underestimate or overestimate the risk for these persons.
 
 ## MCP server
 
