@@ -78,18 +78,35 @@ class CalculateCvdRiskTool implements IMcpTool {
         )
           .then((res) => {
             if (!res.entry?.length) {
-              return null;
+              return [];
             }
-
-            return res.entry
-              .map((x) => x.resource.code?.coding?.map((y) => y.display) || [])
-              .reduce((a, b) => a.concat(b), []);
+            return res.entry.map((x) => x.resource);
+            // return res.entry
+            //   .map((x) => x.resource.code?.coding?.map((y) => y.display) || [])
+            //   .reduce((a, b) => a.concat(b), []);
           })
           .catch((error) => {
             console.error("Error fetching observations:", error);
-            return null;
+            return [];
           });
         console.log("observations:", observations);
+
+        const conditionsRes = await getFhirResource(
+          fhirContext,
+          "Condition",
+          effectivePatientId
+        )
+          .then((res) => {
+            if (!res.entry?.length) {
+              return [];
+            }
+            return res.entry.map((x) => x.resource);
+          })
+          .catch((error) => {
+            console.error("Error fetching conditions:", error);
+            return [];
+          });
+
 
         try {
           // Helper functions to parse fields
@@ -99,12 +116,11 @@ class CalculateCvdRiskTool implements IMcpTool {
           const race = getPatientRace(patientResource).join(", ");
           const totalCholesterol = getPatientCholesterol(observations);
           const hdl = getPatientHDL(observations);
-          const systolicBloodPressure =
-            getPatientSystolicBloodPressure(observations);
+          const systolicBloodPressure = getPatientSystolicBloodPressure(observations);
           const conditions = {
             smoker: getPatientSmokingStatus(observations),
-            diabetic: getPatientDiabetesStatus(observations),
-            hypertensive: getPatientHypertensionStatus(observations),
+            diabetic: getPatientDiabetesStatus(conditionsRes),
+            hypertensive: getPatientHypertensionStatus(conditionsRes),
           };
 
           const patient: Patient = {

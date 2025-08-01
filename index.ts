@@ -5,7 +5,7 @@ import * as tools from "./mcp-tools";
 import { IMcpTool } from "./IMcpTool";
 
 const app = express();
-const port = 6000;
+const port = 5000;
 
 app.use(express.json());
 
@@ -16,7 +16,7 @@ app.get("/hello-world", async (_, res) => {
 app.post("/", async (req, res) => {
   try {
     const server = new McpServer({
-      name: "Typescript Template",
+      name: "CVD Risk Calculator MCP Server",
       version: "1.0.0",
     });
 
