@@ -9,6 +9,7 @@ An open source repository containing a CVD risk model predictor and an external 
    ```bash
    git clone https://github.com/jamesvdinh/cardiovascular-disease-mcp.git
    ```
+
 2. Install [VS Code][4]
 3. Open `VS Code` and go to `File -> Open Folder` and select the `cardiovascular-disease-mcp` folder
 
@@ -36,7 +37,7 @@ The file associated with the model calculation is located in [mcp-tools/calculat
 
 ## MCP server
 
-This custom MCP server is based off of [Darena Health's default MCP Health Community MCP Repository](https://github.com/darena-solutions/darena-health-community-mcp)
+This custom MCP server is based off of [Darena Health's default Community MCP Repository](https://github.com/darena-solutions/darena-health-community-mcp)
 
 ### File structure
 
@@ -61,6 +62,7 @@ This custom MCP server is based off of [Darena Health's default MCP Health Commu
    ```bash
    docker-compose up --build
    ```
+
 </details>
 
 ### Creating a web-facing API endpoint

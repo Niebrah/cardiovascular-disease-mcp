@@ -116,10 +116,9 @@ class CalculateCvdRiskTool implements IMcpTool {
           const race = getPatientRace(patientResource).join(", ");
           const totalCholesterol = getPatientCholesterol(observations);
           const hdl = getPatientHDL(observations);
-          const systolicBloodPressure =
-            getPatientSystolicBloodPressure(observations);
+          const systolicBloodPressure = getPatientSystolicBloodPressure(observations);
           const conditions = {
-            smoker: getPatientSmokingStatus(conditionsRes),
+            smoker: getPatientSmokingStatus(observations),
             diabetic: getPatientDiabetesStatus(conditionsRes),
             hypertensive: getPatientHypertensionStatus(conditionsRes),
           };

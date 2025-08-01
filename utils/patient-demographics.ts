@@ -1,6 +1,7 @@
 /*
   Sex, Age, Race
 */
+import { differenceInYears, parseISO } from "date-fns";
 
 export function getPatientName(patient: any): string {
   const name = patient.name?.[0];
@@ -20,17 +21,8 @@ export function getPatientAge(patient: any): number {
     throw new Error("Patient birthDate is missing");
   }
 
-  const birthDate = new Date(patient.birthDate);
-  const today = new Date();
-
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  const dayDiff = today.getDate() - birthDate.getDate();
-
-  // Adjust if birthday hasn't occurred yet this year
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--;
-  }
+  const date = parseISO(patient.birthDate);
+  const age = differenceInYears(new Date(), date);
 
   return age;
 }
