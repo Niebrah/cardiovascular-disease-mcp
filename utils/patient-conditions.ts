@@ -10,38 +10,43 @@ const posSmoking = ["449868002", "428041000124106", "77176002", "428071000124103
 
 function getConditionValue(
     conditions: any[],
-    conditionSNOWMED: string[],
+    snowmedCodes: string[],
 ): boolean {
     for (const cond of conditions) {
-        const codeVal = cond.code?.coding?.code
+        const codeVal = cond.code?.coding[0]?.code
         if (!codeVal) {
             continue;
         }
-        return conditionSNOWMED.includes(codeVal) ? true : false;
+        else if (snowmedCodes.includes(codeVal)) {
+            return true;
+        }
     }
+    return false;
+}
 
+export function getPatientSmokingStatus(observations: any): boolean {
+    for (const obs of observations) {
+        const code = obs.code?.coding[0] ?? [];
+        if (code === smokingLoinc) {
+            continue;
+        }
+        const codeVal = obs.valueCodeableConcept?.coding?.code
+        console.log("Smoking codeVal:", codeVal);
+        if (!codeVal) {
+            continue;
+        }
+        else if (codeVal === negSmoking) {
+            return false;
+        }
+        else if (posSmoking.includes(codeVal)) {
+            return true;
+        }
+    }
     return false;
 }
 
 export function getPatientDiabetesStatus(conditions: any): boolean {
     return getConditionValue(conditions, diabetesSNOWMED);
-}
-
-export function getPatientSmokingStatus(observations: any): boolean {
-    for (const obs of observations) {
-        const codes = obs.code?.coding ?? [];
-        if (codes.some((code: any) => code.code === smokingLoinc)) {
-            const codeVal = obs.valueCodeableConcept?.coding?.code
-            if (!codeVal) {
-                continue;
-            }
-            if (codeVal === negSmoking) {
-                return false;
-            }
-            return posSmoking.includes(codeVal) ? true : false;
-        }
-    }
-    return false;
 }
 
 export function getPatientHypertensionStatus(conditions: any): boolean {

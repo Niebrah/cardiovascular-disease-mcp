@@ -32,7 +32,7 @@ class CalculateCvdRiskTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
     server.tool(
       "calculate_cvd_risk",
-      "Calculates the cardiovascular disease (CVD) 10-year risk",
+      "Calculates the cardiovascular disease (CVD) 10-year risk based on the Pooled Cohort Equations and lifetime risk prediction tools.",
       {
         patientID: z.string(),
       },
@@ -68,7 +68,6 @@ class CalculateCvdRiskTool implements IMcpTool {
           `${fhirContext.url}/Patient/${effectivePatientId}`,
           { headers }
         );
-        console.log("patient resource:", patientResource);
 
         // FHIR Observations for retrieving patient vitals and conditions
         const observations = await getFhirResource(
@@ -81,15 +80,11 @@ class CalculateCvdRiskTool implements IMcpTool {
               return [];
             }
             return res.entry.map((x) => x.resource);
-            // return res.entry
-            //   .map((x) => x.resource.code?.coding?.map((y) => y.display) || [])
-            //   .reduce((a, b) => a.concat(b), []);
           })
           .catch((error) => {
             console.error("Error fetching observations:", error);
             return [];
           });
-        console.log("observations:", observations);
 
         const conditionsRes = await getFhirResource(
           fhirContext,
@@ -106,7 +101,6 @@ class CalculateCvdRiskTool implements IMcpTool {
             console.error("Error fetching conditions:", error);
             return [];
           });
-
 
         try {
           // Helper functions to parse fields
@@ -135,13 +129,43 @@ class CalculateCvdRiskTool implements IMcpTool {
           };
 
           const result = calculateCVDRisk(patient);
+          // if (result === null) {
+          //   return createTextResponse(
+          //     `The patient's age (${age}) is outside the valid range for CVD risk calculation (40-79 years).`,
+          //     { isError: true }
+          //   );
+          // }
           console.log("calculated risk:", result);
           return createTextResponse(
-            `Predicted 10-year Cardiovascular Disease risk score: ${result} for patient ${patient.toString()}.`
+            `${name}'s predicted 10-year Cardiovascular Disease risk score: ${result}%.\n\n` +
+            `**Attributes used:**\n` +
+            `- Age: ${age}\n` +
+            `- Sex: ${gender}\n` +
+            `- Race: ${race}\n` +
+            `- Total Cholesterol: ${totalCholesterol}\n` +
+            `- HDL: ${hdl}\n` +
+            `- Systolic Blood Pressure: ${systolicBloodPressure}\n` +
+            `- Diabetic: ${conditions.diabetic}\n` +
+            `- Smoker: ${conditions.smoker}\n` +
+            `- Hypertensive: ${conditions.hypertensive}`,
+            {
+              metadata: {
+                patientAttributesUsed: {
+                  name,
+                  age,
+                  gender,
+                  race,
+                  totalCholesterol,
+                  hdl,
+                  systolicBloodPressure,
+                  conditions,
+                }
+              }
+            }
           );
         } catch (error) {
           console.error("Error", error);
-          return createTextResponse("error occured");
+          return createTextResponse("error occured" + error);
         }
       }
     );

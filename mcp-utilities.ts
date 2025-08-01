@@ -1,9 +1,17 @@
 export function createTextResponse(
   text: string,
-  options: { isError: boolean } = { isError: false }
-): { content: { type: "text"; text: string }[]; isError?: boolean } {
+  options: {
+    isError?: boolean;
+    metadata?: Record<string, any>; // or define a stricter type if preferred
+  } = {}
+): {
+  content: { type: "text"; text: string }[];
+  isError?: boolean;
+  metadata?: Record<string, any>;
+} {
   return {
     content: [{ type: "text", text }],
-    isError: options.isError,
+    ...(options.isError !== undefined && { isError: options.isError }),
+    ...(options.metadata && { metadata: options.metadata }),
   };
 }
