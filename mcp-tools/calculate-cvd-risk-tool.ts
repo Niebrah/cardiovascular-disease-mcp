@@ -113,7 +113,7 @@ class CalculateCvdRiskTool implements IMcpTool {
           const systolicBloodPressure = getPatientSystolicBloodPressure(observations);
           const conditions = {
             smoker: getPatientSmokingStatus(observations),
-            diabetic: getPatientDiabetesStatus(conditionsRes),
+            diabetic: getPatientDiabetesStatus(conditionsRes, observations),
             hypertensive: getPatientHypertensionStatus(conditionsRes),
           };
 

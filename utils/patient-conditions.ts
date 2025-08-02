@@ -35,7 +35,7 @@ export function getPatientDiabetesStatus(conditions: any[], observations: any[])
     for (const obs of observations) {
         const codes = obs.code?.coding ?? [];
         const code = codes.find(
-        (c: any) => c.code === hba1cLoinc || c.code === fastingGlucoseLoinc
+            (c: any) => c.code === hba1cLoinc || c.code === fastingGlucoseLoinc
         );
         if (!code) continue;
 
