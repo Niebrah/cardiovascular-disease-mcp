@@ -26,8 +26,6 @@ function getConditionValue(
     return false;
 }
 
-
-
 export function getPatientDiabetesStatus(conditions: any[], observations: any[]): boolean {
     // Check for SNOWMED conditions
     const hasDiagnosis = getConditionValue(conditions, diabetesSNOWMED);
@@ -50,9 +48,6 @@ export function getPatientDiabetesStatus(conditions: any[], observations: any[])
 
     return false;
 }
-
-
-
 
 export function getPatientSmokingStatus(observations: any): boolean {
     for (const obs of observations) {
