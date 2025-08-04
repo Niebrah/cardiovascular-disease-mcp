@@ -51,21 +51,15 @@ export function getPatientDiabetesStatus(conditions: any[], observations: any[])
 
 export function getPatientSmokingStatus(observations: any): boolean {
     for (const obs of observations) {
-        const code = obs.code?.coding[0] ?? [];
-        if (code === smokingLoinc) {
+        const code = obs.code?.coding[0].code ?? "";
+        if (code !== smokingLoinc) {
             continue;
         }
-        const codeVal = obs.valueCodeableConcept?.coding?.code
-        console.log("Smoking codeVal:", codeVal);
+        const codeVal = obs.valueCodeableConcept?.coding[0]?.code
         if (!codeVal) {
             continue;
         }
-        else if (codeVal === negSmoking) {
-            return false;
-        }
-        else if (posSmoking.includes(codeVal)) {
-            return true;
-        }
+        return codeVal !== negSmoking && posSmoking.includes(codeVal);
     }
     return false;
 }
