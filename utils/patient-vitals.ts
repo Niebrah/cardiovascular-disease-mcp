@@ -2,8 +2,15 @@
     Total Cholesterol, HDL - Cholesterol, Systolic Blood Pressure
 */
 
-const vitalsLookup = {
-  cholesterol: {
+type vitalsDict = {
+  [key: string]: {
+    loinc: string;
+    default: number;
+  };
+}
+
+export const vitalsLookup: vitalsDict = {
+  totalCholesterol: {
     loinc: "2093-3",
     default: 200,
   },
@@ -34,7 +41,7 @@ function getObservationVal(
 }
 
 export const getPatientCholesterol = (obs: any[]) =>
-  getObservationVal(obs, "cholesterol");
+  getObservationVal(obs, "totalCholesterol");
 
 export const getPatientHDL = (obs: any[]) =>
   getObservationVal(obs, "hdl");

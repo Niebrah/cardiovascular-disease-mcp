@@ -17,6 +17,7 @@ import {
   getPatientName,
 } from "../utils/patient-demographics";
 import {
+  vitalsLookup,
   getPatientCholesterol,
   getPatientHDL,
   getPatientSystolicBloodPressure,
@@ -27,6 +28,8 @@ import {
   getPatientHypertensionStatus,
 } from "../utils/patient-conditions";
 import calculateCVDRisk from "../utils/calculate-cvd-risk";
+
+type PatientVitalsKeys = "totalCholesterol" | "hdl" | "systolicBloodPressure";
 
 class CalculateCvdRiskTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
@@ -129,6 +132,19 @@ class CalculateCvdRiskTool implements IMcpTool {
           };
 
           const result = calculateCVDRisk(patient);
+          const defaultVitals = () => {
+            let output = [];
+            for (const vital in vitalsLookup) {
+              const key = vital as PatientVitalsKeys;
+              const defaultVal = vitalsLookup[vital].default;
+              if (patient[key] === defaultVal) {
+                output.push(key);
+              }
+            }
+            return output;
+          }
+          const defaultVals = defaultVitals().join(", ");
+
           if (result === null) {
             return createTextResponse(
               `The patient's age (${age}) is outside the valid range for CVD risk calculation (40-79 years).`,
@@ -137,17 +153,19 @@ class CalculateCvdRiskTool implements IMcpTool {
           }
           console.log("calculated risk:", result);
           return createTextResponse(
-            `${name}'s predicted 10-year Cardiovascular Disease risk score: ${result}%.\n\n` +
-            `**Attributes used:**\n` +
+            `${name}'s predicted 10-year Cardiovascular Disease risk score: ${result}%.` +
+            `These vitals were not found on this patient and will be replaced with default values: ${defaultVals}\n\n` +
+            `Attributes used:\n` +
             `- Age: ${age}\n` +
             `- Sex: ${gender}\n` +
             `- Race: ${race}\n` +
-            `- Total Cholesterol: ${totalCholesterol}\n` +
-            `- HDL: ${hdl}\n` +
-            `- Systolic Blood Pressure: ${systolicBloodPressure}\n` +
+            `- Total Cholesterol: ${totalCholesterol}${defaultVals.includes("totalCholesterol") ? " (default)" : ""}\n` +
+            `- HDL: ${hdl}${defaultVals.includes("hdl") ? " (default)" : ""}\n` +
+            `- Systolic Blood Pressure: ${systolicBloodPressure}${defaultVals.includes("systolicBloodPressure") ? " (default)" : ""}\n` +
             `- Diabetic: ${conditions.diabetic}\n` +
             `- Smoker: ${conditions.smoker}\n` +
-            `- Hypertensive: ${conditions.hypertensive}`,
+            `- Hypertensive: ${conditions.hypertensive}\n\n` +
+            `Always remember, these predictions are estimates and regular health check-ups with a medical professional are important to stay informed of one's cardiovascular health status.`,
             {
               metadata: {
                 patientAttributesUsed: {
