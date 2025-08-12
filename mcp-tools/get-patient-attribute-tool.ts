@@ -5,6 +5,7 @@ import axios from "axios";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { Request } from "express";
 import { IMcpTool } from "../IMcpTool";
+import { getPatientName, getPatientRace } from "../utils/patient-demographics";
 
 class GetPatientAttributeTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
@@ -46,18 +47,13 @@ class GetPatientAttributeTool implements IMcpTool {
           // Switch by requested field
           switch (field) {
             case "name": {
-              const name = patient.name?.[0];
-              if (!name) return createTextResponse("No name found.");
-              const fullName = `${name.given?.join(" ")} ${name.family}`;
-              return createTextResponse(fullName);
+              const name = getPatientName(patient);
+              return createTextResponse(name);
             }
 
             case "race": {
-              const extension = patient.extension?.find((ext: any) =>
-                ext.url?.includes("us-core-race")
-              );
-              const race = extension?.valueCodeableConcept?.text;
-              return createTextResponse(race || "Race not found.");
+              const race = getPatientRace(patient); // [White, Native American]
+              return createTextResponse(race.join(", ") || "Race not found.");
             }
 
             case "height":
