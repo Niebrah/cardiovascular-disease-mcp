@@ -56,5 +56,5 @@ app.post("/", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`MCP server listening on port ${port}`);
-  debugTool();
+  debugTool("get_clinical_trials");
 });

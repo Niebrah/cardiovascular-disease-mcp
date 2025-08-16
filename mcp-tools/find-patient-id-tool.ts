@@ -18,7 +18,7 @@ class FindPatientIdTool implements IMcpTool {
         firstName: z.string().optional().describe("The patient's first name"),
         lastName: z.string().optional().describe("The patient's last name"),
       },
-      async ({ firstName, lastName }, extra) => {
+      async ({ firstName, lastName }) => {
         const fhirContext = getFhirContext(req);
         if (!fhirContext) {
           return createTextResponse(
