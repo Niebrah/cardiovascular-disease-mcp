@@ -3,6 +3,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import express from "express";
 import * as tools from "./mcp-tools";
 import { IMcpTool } from "./IMcpTool";
+import { debugTool } from "./utils/debug";
 
 const app = express();
 const port = 5000;
@@ -55,4 +56,5 @@ app.post("/", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`MCP server listening on port ${port}`);
+  debugTool();
 });
