@@ -3,6 +3,7 @@ import { ReadFhirResourceToolInstance } from "./read-fhir-resource-tool";
 import { GetFhirResourceToolInstance } from "./get-patient-fhir-resource";
 import { GetPatientAttributeToolInstance } from "./get-patient-attribute-tool";
 import { CalculateCvdRiskToolInstance } from "./calculate-cvd-risk-tool";
+import { GetClinicalTrialsInstance } from "./get-clinical-trials-tool";
 
 export {
   FindPatientIdToolInstance,
@@ -10,4 +11,5 @@ export {
   GetFhirResourceToolInstance,
   GetPatientAttributeToolInstance,
   CalculateCvdRiskToolInstance,
+  GetClinicalTrialsInstance,
 };
