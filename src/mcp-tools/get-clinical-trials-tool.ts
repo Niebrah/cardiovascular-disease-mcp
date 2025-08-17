@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { Request } from "express";
-import { IMcpTool } from "../IMcpTool";
-import { createTextResponse } from "../mcp-utilities";
+import { IMcpTool } from "../../IMcpTool";
+import { createTextResponse } from "../../mcp-utilities";
 import { fetchClinicalTrials } from "../utils/fetch-clinical-trials";
 
 class GetClinicalTrials implements IMcpTool {

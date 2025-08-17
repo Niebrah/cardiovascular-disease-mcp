@@ -3,12 +3,12 @@ import {
   getFhirContext,
   getFhirResource,
   getPatientIdIfContextExists,
-} from "../fhir-utilities";
-import { createTextResponse } from "../mcp-utilities";
+} from "../../fhir-utilities";
+import { createTextResponse } from "../../mcp-utilities";
 import axios from "axios";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { Request } from "express";
-import { IMcpTool } from "../IMcpTool";
+import { IMcpTool } from "../../IMcpTool";
 import { Patient } from "../utils/patient";
 import {
   getPatientSex,

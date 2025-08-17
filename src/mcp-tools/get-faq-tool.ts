@@ -1,33 +1,26 @@
 import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { Request } from "express";
-import { IMcpTool } from "../IMcpTool";
-import { createTextResponse } from "../mcp-utilities";
-import * as path from "path";
-import * as fs from "fs";
+import { IMcpTool } from "../../IMcpTool";
+import { createTextResponse } from "../../mcp-utilities";
+import faqData from "../data/faq-data.json";
+import Fuse from "fuse.js";
 
-// Define FAQ type
 interface FaqEntry {
   question: string;
   answer: string;
 }
 
 class GetFaq implements IMcpTool {
-  private faqData: FaqEntry[] = [];
+  private faqData: FaqEntry[] = faqData;
+
+  private fuse: Fuse<FaqEntry>;
 
   constructor() {
-    this.loadFaqData();
-  }
-
-  private loadFaqData() {
-    try {
-      const faqPath = path.resolve(__dirname, "../../static/faq-data.json");
-      const faqRaw = fs.readFileSync(faqPath, "utf-8");
-      this.faqData = JSON.parse(faqRaw);
-    } catch (error) {
-      console.error("Error loading FAQ data:", error);
-      this.faqData = [];
-    }
+    this.fuse = new Fuse(this.faqData, {
+      keys: ["question"],
+      threshold: 0.4,
+    });
   }
 
   registerTool(server: McpServer, req: Request) {
@@ -57,16 +50,12 @@ class GetFaq implements IMcpTool {
         }
 
         // Fuzzy/partial match
-        const partialMatches = this.faqData.filter((f) =>
-          f.question.toLowerCase().includes(normalized)
-        );
+        const results = this.fuse.search(normalized);
 
-        if (partialMatches.length > 0) {
-          const suggestions = partialMatches
-            .map((f) => `- ${f.question}`)
-            .join("\n");
+        if (results.length > 0) {
+          const best = results[0].item;
           return createTextResponse(
-            `I couldn't find an exact match, but here are similar questions:\n${suggestions}`
+            `Q: ${best.question}\nA: ${best.answer}`
           );
         }
 

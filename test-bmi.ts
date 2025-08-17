@@ -1,4 +1,4 @@
-import { getPatientObesityStatus } from "./utils/patient-conditions";
+import { getPatientObesityStatus } from "./src/utils/patient-conditions";
 
 // Mock observation data from FHIR source
 const mockObservations = [

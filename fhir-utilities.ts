@@ -7,7 +7,7 @@ import {
 } from "./mcp-constants";
 import * as jose from "jose";
 import axios from "axios";
-import { Bundle } from "./utils/bundle";
+import { Bundle } from "./src/utils/bundle";
 
 export function getFhirContext(req: Request): FhirContext | null {
   const headers = req.headers;

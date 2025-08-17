@@ -26,7 +26,7 @@ const calculateCVDRisk = (patientInfo: Patient) => {
   const ageSmoke = patientInfo.conditions.smoker ? lnAge : 0;
 
   const isAA = patientInfo.race.includes("African American");
-  const isMale = patientInfo.gender === "Male";
+  const isMale = patientInfo.gender.toLowerCase() === "male";
   let s010Ret = 0;
   let mnxbRet = 0;
   let predictRet = 0;

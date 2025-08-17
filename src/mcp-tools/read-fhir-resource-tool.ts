@@ -1,10 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { z } from "zod";
-import { getFhirContext } from "../fhir-utilities";
-import { createTextResponse } from "../mcp-utilities";
+import { getFhirContext } from "../../fhir-utilities";
+import { createTextResponse } from "../../mcp-utilities";
 import { Request } from "express";
 import axios from "axios";
-import { IMcpTool } from "../IMcpTool";
+import { IMcpTool } from "../../IMcpTool";
 
 class ReadFhirResourceTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {

@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { getFhirContext, getPatientIdIfContextExists } from "../fhir-utilities";
-import { createTextResponse } from "../mcp-utilities";
+import { getFhirContext, getPatientIdIfContextExists } from "../../fhir-utilities";
+import { createTextResponse } from "../../mcp-utilities";
 import axios from "axios";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { Request } from "express";
-import { IMcpTool } from "../IMcpTool";
+import { IMcpTool } from "../../IMcpTool";
 
 class FindPatientIdTool implements IMcpTool {
   registerTool(server: McpServer, req: Request) {

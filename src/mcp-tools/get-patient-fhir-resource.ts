@@ -1,8 +1,8 @@
-import { IMcpTool } from "../IMcpTool";
+import { IMcpTool } from "../../IMcpTool";
 import { z } from "zod";
-import { createTextResponse } from "../mcp-utilities";
+import { createTextResponse } from "../../mcp-utilities";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
-import { getFhirContext, getFhirResource, getPatientIdIfContextExists } from "../fhir-utilities";
+import { getFhirContext, getFhirResource, getPatientIdIfContextExists } from "../../fhir-utilities";
 import { Request } from "express";
 
 export class GetFhirResourceTool implements IMcpTool {
