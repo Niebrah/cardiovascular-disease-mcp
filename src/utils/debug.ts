@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function debugTool(tool: string, ...args: any[]) {
+export async function debugTool(tool: string, args: Record<string, any>) {
   const res = await axios.post(
     "http://localhost:5000/",
     {
@@ -20,5 +20,9 @@ export async function debugTool(tool: string, ...args: any[]) {
     }
   );
 
-  console.log(`Tool response (${tool}): \n`, JSON.stringify(res.data, null, 2));
+  console.log(`
+--- DEBUG ---
+Tool: ${tool}
+Args: ${Object.values(args)}
+Output: ${res.data}`);
 }

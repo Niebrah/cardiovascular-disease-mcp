@@ -10,8 +10,8 @@ const port = 5000;
 
 app.use(express.json());
 
-app.get("/hello-world", async (_, res) => {
-  res.status(200).send("Hello World!");
+app.get("/", async (_, res) => {
+  res.status(200).send("Server is up & running!");
 });
 
 app.post("/", async (req, res) => {
@@ -56,4 +56,8 @@ app.post("/", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`MCP server listening on port ${port}`);
+
+  // DEBUG
+  debugTool("get_clinical_trials", { condition: "cardiovascular disease" });
+  // debugTool("get_faq", { question: "What is a clinical trial?" });
 });

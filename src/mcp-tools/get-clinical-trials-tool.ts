@@ -17,8 +17,17 @@ class GetClinicalTrials implements IMcpTool {
       },
       async ({ condition }) => {
         try {
-          // API call to ClinicalTrials.gov API
-          const studies = await fetchClinicalTrials(condition);
+          // API call to ClinicalTrials.gov API (query params: https://clinicaltrials.gov/data-api/api)
+          // const fields = [
+          //   "protocolSection.identificationModule.briefTitle",
+          //   "protocolSection.conditionsModule.conditions",
+          // ]
+          const args = {
+            "query.cond": condition,
+            // "filter.overallStatus": "Recruiting"
+            // fields
+          }
+          const studies = await fetchClinicalTrials(args);
 
           const studiesListedInfo = studies.map((s: any, idx: number) => {
             const title = s.protocolSection.identificationModule.briefTitle;
