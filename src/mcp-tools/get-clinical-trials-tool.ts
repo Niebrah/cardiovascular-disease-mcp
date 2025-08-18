@@ -29,28 +29,31 @@ class GetClinicalTrials implements IMcpTool {
           const args = {
             "query.cond": condition,
             "query.locn": location,
-            // "filter.overallStatus": "Recruiting"
+            "filter.overallStatus": "RECRUITING",
+            // "filter.advanced": "AREA[PrimaryCompletionDate]RANGE[MIN, 2025]",
             // "fields": fields.join(","),
           }
           const studies = await fetchClinicalTrials(args);
 
-          const studiesListedInfo = studies.map((s: any, idx: number) => {
+          const studiesListedInfo = studies.slice(0,5).map((s: any, idx: number) => {
             const NCTId = s.protocolSection.identificationModule.nctId || null;
             const nctIdLink = NCTId ? `https://clinicaltrials.gov/study/${NCTId}` : "n/a";
             const title = s.protocolSection.identificationModule?.briefTitle || "untitled study";
-            const condition = s.protocolSection.conditionsModule?.conditions?.join(", ") || "n/a";
-            const locationCountry = s.protocolSection.contactsLocationsModule?.locations?.country || "n/a";
-            const locationState = s.protocolSection.contactsLocationsModule?.locations?.state || "n/a";
-            const leadSponsor = s.protocolSection.sponsorCollaboratorsModule?.leadSponsor?.name || "n/a";
-            const startDate = s.protocolSection.statusModule.startDateStruct?.date || "n/a";
+            const conditions = s.protocolSection.conditionsModule?.conditions?.join(", ") || "n/a";
+            const overallStatus = s.protocolSection.statusModule.overallStatus || "n/a";
+            const locationCountry = s.protocolSection.contactsLocationsModule.locations?.country || "n/a";
+            const locationState = s.protocolSection.contactsLocationsModule.locations?.state || "n/a";
+            const leadSponsor = s.protocolSection.sponsorCollaboratorsModule.leadSponsor?.name || "n/a";
+            const startDate = s.protocolSection.statusModule.startDateStruct.date || "n/a";
             const completionDate = s.protocolSection.statusModule.primaryCompletionDateStruct?.date || "n/a";
-            const briefSummary = s.protocolSection.descriptionModule?.briefSummary || "n/a";
             // const eligibilityCriteria = s.protocolSection.eligibilityModule?.eligibilityCriteria || "n/a";
-            return (`${idx + 1}. ${title} [${condition}]\n
-              Location: ${locationCountry} - ${locationState}, Lead Sponsor: ${leadSponsor}, Start Date: ${startDate}, Completion Date: ${completionDate}\n
-              Description: ${briefSummary}\n
-              URL: ${nctIdLink}\n
-              `);
+            return (`${idx + 1}. ${title} [${overallStatus}]\n
+              - Conditions: ${conditions}\n
+              - Location: ${locationCountry}, ${locationState}\ns
+              - Lead Sponsor: ${leadSponsor}\n
+              - Duration: ${startDate} - ${completionDate}\n
+              - More Info: ${nctIdLink}\n
+            `);
           });
           return createTextResponse("Clinical trials: \n" + studiesListedInfo);
         } catch (error) {
