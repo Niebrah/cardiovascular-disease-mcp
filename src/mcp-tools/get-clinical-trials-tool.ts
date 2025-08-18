@@ -49,7 +49,7 @@ class GetClinicalTrials implements IMcpTool {
             // const eligibilityCriteria = s.protocolSection.eligibilityModule?.eligibilityCriteria || "n/a";
             return (`${idx + 1}. ${title} [${overallStatus}]\n
               - Conditions: ${conditions}\n
-              - Location: ${locationCountry}, ${locationState}\ns
+              - Location: ${locationState}, ${locationCountry}\ns
               - Lead Sponsor: ${leadSponsor}\n
               - Duration: ${startDate} - ${completionDate}\n
               - More Info: ${nctIdLink}\n
