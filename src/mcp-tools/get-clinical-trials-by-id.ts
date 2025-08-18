@@ -4,6 +4,7 @@ import { Request } from "express";
 import { IMcpTool } from "../../IMcpTool";
 import { createTextResponse } from "../../mcp-utilities";
 import { studiesListedInfo } from "../utils/studies-listed-info";
+import { fetchClinicalTrials } from "../utils/fetch-clinical-trials";
 
 class GetClinicalTrialById implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
@@ -22,11 +23,11 @@ class GetClinicalTrialById implements IMcpTool {
       async ({ nctId, searchField }) => {
         try {
             // API call to ClinicalTrials.gov API (query params: https://clinicaltrials.gov/data-api/api)
-            // TODO: Implement searchField functionality using API endpoint GET /studies/{nctId}
+            const args = {}
+            const study = await fetchClinicalTrials(args, nctId);
+            // TODO: parse through this study using searchField if provided
 
-            // const study = fetch the clinical trial by nctId
-            // const formattedStudies = studiesListedInfo(study);
-            
+            // TODO: format the study information for LLM output
             return createTextResponse("");
         } catch (error) {
           console.error("Unexpected error:", error);
