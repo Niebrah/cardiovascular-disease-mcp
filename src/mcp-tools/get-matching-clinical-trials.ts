@@ -6,11 +6,11 @@ import { createTextResponse } from "../../mcp-utilities";
 import { fetchClinicalTrials } from "../utils/fetch-clinical-trials";
 import { studiesListedInfo } from "../utils/studies-listed-info";
 
-class GetClinicalTrials implements IMcpTool {
+class GetMatchingClinicalTrials implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
     server.tool(
-      "get_clinical_trials",
-      "Retrieves clinical trials studies with search query parameters.",
+      "get_matching_clinical_trials",
+      "Retrieves clinical trials studies with search query parameters based on a patient's attributes.",
       {
         condition: z
           .string()
@@ -27,7 +27,7 @@ class GetClinicalTrials implements IMcpTool {
             "query.cond": condition,
             "query.locn": location,
             "filter.overallStatus": "RECRUITING",
-            // "filter.advanced": "AREA[PrimaryCompletionDate]RANGE[MIN, 2025]",
+            // TODO: Add filters based on patient attributes
           }
           const studies = await fetchClinicalTrials(args);
           const formattedStudies = studiesListedInfo(studies);
@@ -44,4 +44,4 @@ class GetClinicalTrials implements IMcpTool {
   }
 }
 
-export const GetClinicalTrialsInstance = new GetClinicalTrials();
+export const GetMatchingClinicalTrialsInstance = new GetMatchingClinicalTrials();

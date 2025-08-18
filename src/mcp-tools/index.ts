@@ -5,6 +5,8 @@ import { GetPatientAttributeToolInstance } from "./get-patient-attribute-tool";
 import { CalculateCvdRiskToolInstance } from "./calculate-cvd-risk-tool";
 import { GetClinicalTrialsInstance } from "./get-clinical-trials-tool";
 import { GetFaqInstance } from "./get-faq-tool";
+import { GetMatchingClinicalTrialsInstance } from "./get-matching-clinical-trials";
+import { GetClinicalTrialByIdInstance } from "./get-clinical-trials-by-id";
 
 export {
   FindPatientIdToolInstance,
@@ -14,4 +16,6 @@ export {
   CalculateCvdRiskToolInstance,
   GetClinicalTrialsInstance,
   GetFaqInstance,
+  GetMatchingClinicalTrialsInstance,
+  GetClinicalTrialByIdInstance,
 };
