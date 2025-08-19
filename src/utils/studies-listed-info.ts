@@ -35,7 +35,7 @@ export const studiesListedInfo = (studies: Object[]) =>
         - Conditions: ${conditions}\n
         - Location: ${uniqueLocations}\n
         - Lead Sponsor: ${leadSponsor}\n
-        - Duration: ${startDate} - ${completionDate}\n
+        - Duration: ${startDate} to ${completionDate}\n
         - More Info: ${nctIdLink}\n
     `;
   });

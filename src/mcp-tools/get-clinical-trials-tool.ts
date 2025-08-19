@@ -32,7 +32,7 @@ class GetClinicalTrials implements IMcpTool {
             "filter.overallStatus": "RECRUITING",
           };
           const studies = await fetchClinicalTrials(args);
-          const formattedStudies = studiesListedInfo(studies.slice(0, 5));
+          const formattedStudies = studiesListedInfo(studies.slice(0, 3));
           return createTextResponse("Clinical trials: \n" + formattedStudies);
         } catch (error) {
           console.error("Unexpected error:", error);

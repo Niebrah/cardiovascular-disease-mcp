@@ -120,7 +120,7 @@ class GetMatchingClinicalTrials implements IMcpTool {
             `,
           };
           const studies = await fetchClinicalTrials(args);
-          const formattedStudies = studiesListedInfo(studies.slice(0, 5));
+          const formattedStudies = studiesListedInfo(studies.slice(0, 3));
           return createTextResponse(
             `Clinical trials that ${name} fits the criteria for:\n ${formattedStudies}`
           );
