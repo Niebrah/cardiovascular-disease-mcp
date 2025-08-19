@@ -1,4 +1,4 @@
-export const studiesListedInfo = (studies: Object[]) => studies.slice(0,5).map((s: any, idx: number) => {
+export const studiesListedInfo = (studies: Object[]) => studies.map((s: any, idx: number) => {
     const NCTId = s.protocolSection.identificationModule.nctId || null;
     const nctIdLink = NCTId ? `https://clinicaltrials.gov/study/${NCTId}` : "n/a";
     const title = s.protocolSection.identificationModule?.briefTitle || "untitled study";

@@ -12,7 +12,7 @@ class GetClinicalTrialById implements IMcpTool {
       "get_clinical_trials_by_id",
       "Retrieves a single clinical trial with search field parameters.",
       {
-        nctId: z
+        nctID: z
           .string()
           .describe("The NCT ID of the clinical trial study"),
         searchField: z
@@ -20,11 +20,11 @@ class GetClinicalTrialById implements IMcpTool {
           .optional()
           .describe("The field to search in the clinical trial study (optional)"),
       },
-      async ({ nctId, searchField }) => {
+      async ({ nctID, searchField }) => {
         try {
             // API call to ClinicalTrials.gov API (query params: https://clinicaltrials.gov/data-api/api)
             const args = {}
-            const study = await fetchClinicalTrials(args, nctId);
+            const study = await fetchClinicalTrials(args, nctID);
             // TODO: parse through this study using searchField if provided
 
             // TODO: format the study information for LLM output
@@ -32,7 +32,7 @@ class GetClinicalTrialById implements IMcpTool {
         } catch (error) {
           console.error("Unexpected error:", error);
           return createTextResponse(
-            "An error occurred while retrieving clinical trial with ID " + nctId + error,
+            "An error occurred while retrieving clinical trial with ID " + nctID + error,
             { isError: true }
           );
         }

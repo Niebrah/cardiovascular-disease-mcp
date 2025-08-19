@@ -30,7 +30,7 @@ class GetClinicalTrials implements IMcpTool {
             // "filter.advanced": "AREA[PrimaryCompletionDate]RANGE[MIN, 2025]",
           }
           const studies = await fetchClinicalTrials(args);
-          const formattedStudies = studiesListedInfo(studies);
+          const formattedStudies = studiesListedInfo(studies.slice(0,5));
           return createTextResponse("Clinical trials: \n" + formattedStudies);
         } catch (error) {
           console.error("Unexpected error:", error);
