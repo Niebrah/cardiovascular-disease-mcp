@@ -1,3 +1,5 @@
+import { formatList } from "./format-list";
+
 export const studiesListedInfo = (studies: Object[]) =>
   studies.map((s: any, idx: number) => {
     const NCTId = s.protocolSection.identificationModule.nctId || null;
@@ -7,23 +9,18 @@ export const studiesListedInfo = (studies: Object[]) =>
     const title =
       s.protocolSection.identificationModule?.briefTitle || "untitled";
     const allConditions = s.protocolSection.conditionsModule?.conditions || [];
-    let conditions = "n/a";
-    if (allConditions.length > 0) {
-      const shown = allConditions.slice(0, 5).join(", ");
-      const extra =
-        allConditions.length > 5 ? `, +${allConditions.length - 5} more` : "";
-      conditions = shown + extra;
-    }
+    const conditions = formatList(allConditions);
     const overallStatus = s.protocolSection.statusModule.overallStatus || "n/a";
     const locationArr =
       s.protocolSection.contactsLocationsModule.locations || [];
-    const uniqueLocations = Array.from(
+    const uniqueLocations: string[] = Array.from(
       new Set(
         locationArr.map(
           (loc: any) => `${loc.state || "n/a"}, ${loc.country || "n/a"}`
         )
       )
-    ).join("; ");
+    );
+    const formattedLocations = formatList(uniqueLocations);
     const leadSponsor =
       s.protocolSection.sponsorCollaboratorsModule.leadSponsor?.name || "n/a";
     const startDate =
@@ -33,7 +30,7 @@ export const studiesListedInfo = (studies: Object[]) =>
 
     return `${idx + 1}. ${title} [${overallStatus}]\n
         - Conditions: ${conditions}\n
-        - Location: ${uniqueLocations}\n
+        - Location: ${formattedLocations}\n
         - Lead Sponsor: ${leadSponsor}\n
         - Duration: ${startDate} to ${completionDate}\n
         - More Info: ${nctIdLink}\n
