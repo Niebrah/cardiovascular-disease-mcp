@@ -5,9 +5,18 @@ import { IMcpTool } from "../../IMcpTool";
 import { createTextResponse } from "../../mcp-utilities";
 import { fetchClinicalTrials } from "../utils/fetch-clinical-trials";
 import { studiesListedInfo } from "../utils/studies-listed-info";
-import { getFhirContext, getFhirResource, getPatientIdIfContextExists } from "../../fhir-utilities";
+import {
+  getFhirContext,
+  getFhirResource,
+  getPatientIdIfContextExists,
+} from "../../fhir-utilities";
 import axios from "axios";
-import { getPatientAge, getPatientName, getPatientRace, getPatientSex } from "../utils/patient-demographics";
+import {
+  getPatientAge,
+  getPatientName,
+  getPatientRace,
+  getPatientSex,
+} from "../utils/patient-demographics";
 
 class GetMatchingClinicalTrials implements IMcpTool {
   registerTool(server: McpServer, req: Request) {
@@ -20,7 +29,10 @@ class GetMatchingClinicalTrials implements IMcpTool {
           .describe("The ID of the patient to find clinical trials for"),
         condition: z
           .string()
-          .describe("The clinical trial condition listed in the study"),
+          .optional()
+          .describe(
+            "The clinical trial condition listed in the study (optional)"
+          ),
         location: z
           .string()
           .optional()
@@ -92,7 +104,7 @@ class GetMatchingClinicalTrials implements IMcpTool {
         const age = getPatientAge(patientResource);
         const gender = getPatientSex(patientResource).toUpperCase();
         const race = getPatientRace(patientResource).join(", ");
-        
+
         try {
           // API call to ClinicalTrials.gov API (query params: https://clinicaltrials.gov/data-api/api)
 
@@ -106,10 +118,12 @@ class GetMatchingClinicalTrials implements IMcpTool {
                 AREA[MinimumAge]RANGE[MIN, ${age}] AND
                 AREA[MaximumAge]RANGE[${age}, MAX]
             `,
-          }
+          };
           const studies = await fetchClinicalTrials(args);
-          const formattedStudies = studiesListedInfo(studies.slice(0,5));
-          return createTextResponse("Clinical trials: \n" + formattedStudies);
+          const formattedStudies = studiesListedInfo(studies.slice(0, 5));
+          return createTextResponse(
+            `Clinical trials that ${name} fits the criteria for:\n ${formattedStudies}`
+          );
         } catch (error) {
           console.error("Unexpected error:", error);
           return createTextResponse(
@@ -122,4 +136,5 @@ class GetMatchingClinicalTrials implements IMcpTool {
   }
 }
 
-export const GetMatchingClinicalTrialsInstance = new GetMatchingClinicalTrials();
+export const GetMatchingClinicalTrialsInstance =
+  new GetMatchingClinicalTrials();

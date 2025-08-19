@@ -14,7 +14,10 @@ class GetClinicalTrials implements IMcpTool {
       {
         condition: z
           .string()
-          .describe("The clinical trial condition listed in the study"),
+          .optional()
+          .describe(
+            "The clinical trial condition listed in the study (optional)"
+          ),
         location: z
           .string()
           .optional()
@@ -27,10 +30,9 @@ class GetClinicalTrials implements IMcpTool {
             "query.cond": condition,
             "query.locn": location,
             "filter.overallStatus": "RECRUITING",
-            // "filter.advanced": "AREA[PrimaryCompletionDate]RANGE[MIN, 2025]",
-          }
+          };
           const studies = await fetchClinicalTrials(args);
-          const formattedStudies = studiesListedInfo(studies.slice(0,5));
+          const formattedStudies = studiesListedInfo(studies.slice(0, 5));
           return createTextResponse("Clinical trials: \n" + formattedStudies);
         } catch (error) {
           console.error("Unexpected error:", error);
