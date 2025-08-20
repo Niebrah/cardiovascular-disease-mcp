@@ -58,6 +58,6 @@ app.listen(port, () => {
   console.log(`MCP server listening on port ${port}`);
 
   // DEBUG
-  debugTool("get_clinical_trials", { condition: "cardiovascular disease", location: "US" });
+  // debugTool("get_clinical_trials", { condition: "cardiovascular disease", location: "US" });
   // debugTool("get_faq", { question: "What is a clinical trial?" });
 });
