@@ -26,8 +26,18 @@ class GetClinicalTrialById implements IMcpTool {
             const args = {}
             const study = await fetchClinicalTrials(args, nctID);
             // TODO: parse through this study using searchField if provided
+            let resultData;
+                if (searchField && study) {
+                  resultData = study[searchField] ?? `Field '${searchField}' not found in study data.`;
+                } else {
+                  // if no available study
+                  const title = study?.briefTitle ?? "Title not available";
+                  const status = study?.overallStatus ?? "Status not available";
+                  const conditions = Array.isArray(study?.conditions) ? study.conditions.join(", ") : "Conditions not available";
+                  const summary = study?.briefSummary ?? "Summary not available";
 
             // TODO: format the study information for LLM output
+            resultData = `Title: ${title}\nStatus: ${status}\nConditions: ${conditions}\nSummary: ${summary}`;}
             return createTextResponse("");
         } catch (error) {
           console.error("Unexpected error:", error);

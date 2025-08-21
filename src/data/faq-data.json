@@ -1,14 +1,128 @@
 [
   {
-    "question": "What is a clinical trial?",
-    "answer": "A clinical trial is a research study that tests how well new medical approaches work in people."
+    "section": "General FAQ",
+    "items": [
+      {
+        "question": "What is a clinical trial?",
+        "answer": "A clinical trial is a research study that tests how well new medical approaches work in people."
+      },
+      {
+        "question": "Who can participate in a clinical trial?",
+        "answer": "Eligibility varies by study. Each trial has specific inclusion and exclusion criteria."
+      },
+      {
+        "question": "Where are clinical trials conducted?",
+        "answer": "Clinical trials are conducted in hospitals, universities, and research centers around the world."
+      }
+    ]
   },
   {
-    "question": "Who can participate in a clinical trial?",
-    "answer": "Eligibility varies by study. Each trial has specific inclusion and exclusion criteria."
+    "section": "More Resources",
+    "items": [
+      {
+        "question": "What are some tutorials and resources for clinical trials?",
+        "answer": [
+          "Master ClinicalTrials.gov: A Complete Walkthrough - A 30-minute detailed tutorial showing how to search, explore trial data, and submit studies on ClinicalTrials.gov. [https://www.youtube.com/watch?v=WMJFSFhOuFM](https://www.youtube.com/watch?v=WMJFSFhOuFM)",
+          "Finding Clinical Trial Information Using ClinicalTrials.gov - Explains searching, filtering, and understanding trial info from the Patient Engagement Manager at NAF. [https://www.youtube.com/watch?v=qOmnArOgyW0](https://www.youtube.com/watch?v=qOmnArOgyW0)",
+          "ClinicalTrials.gov Registration User's Guide and Live Demo - Step-by-step guide and live demo on registering studies and navigating ClinicalTrials.gov effectively. [https://www.youtube.com/watch?v=BkQh4VgXzVk](https://www.youtube.com/watch?v=BkQh4VgXzVk)",
+          "How to Use ClinicalTrials.gov - Beginner-friendly walkthrough covering basic search techniques and interpreting trial listings. [https://www.youtube.com/watch?v=GT1M0C6a2pc](https://www.youtube.com/watch?v=GT1M0C6a2pc)",
+          "ClinicalTrials.gov Official Training Webpage - Offers on-demand courses, demonstration videos, FAQs, and downloadable guides for researchers and educators. [https://learn.nlm.nih.gov/documentation/training-packets/T0162017P/](https://learn.nlm.nih.gov/documentation/training-packets/T0162017P/)",
+          "Protocol Registration and Results System (PRS) Guided Tutorials - Step-by-step tutorials on registering and submitting clinical trial data using the PRS platform. [https://clinicaltrials.gov/submit-studies/prs-help/prs-guided-tutorials](https://clinicaltrials.gov/submit-studies/prs-help/prs-guided-tutorials)",
+          "ALS Trial Navigator - Interactive online tool for personalized clinical trial matching with guided assistance. [https://als.net/](https://als.net/)",
+          "American Cancer Society Clinical Trial Resources - Educational resources and patient guidance on navigating clinical trials provided by ACS. [https://www.cancer.org/treatment/treatments-and-side-effects/clinical-trials.html](https://www.cancer.org/treatment/treatments-and-side-effects/clinical-trials.html)"
+        ]
+      }
+    ]
   },
   {
-    "question": "Where are clinical trials conducted?",
-    "answer": "Clinical trials are conducted in hospitals, universities, and research centers around the world."
+    "section": "Recruitment Status Questions",
+    "items": [
+      {
+        "question": "What does 'Recruiting' mean for a clinical trial on ClinicalTrials.gov?",
+        "answer": "The trial is currently enrolling eligible participants."
+      },
+      {
+        "question": "What is the difference between 'Not Yet Recruiting' and 'Recruiting'?",
+        "answer": "'Not Yet Recruiting' means the trial plans to enroll participants soon but has not started yet; 'Recruiting' means enrollment has begun."
+      },
+      {
+        "question": "What does 'Active, not recruiting' mean?",
+        "answer": "Participants are still in the trial, but enrollment is closed."
+      },
+      {
+        "question": "What does 'Completed' indicate about a trial?",
+        "answer": "The trial has ended, and all interventions and follow-ups are complete."
+      },
+      {
+        "question": "What is the meaning of 'Suspended', 'Terminated', or 'Withdrawn'?",
+        "answer": "'Suspended' is temporarily stopped, 'Terminated' is stopped early with participants, 'Withdrawn' is stopped before enrolling anyone."
+      },
+      {
+        "question": "Can a study be listed before IRB approval?",
+        "answer": "Yes, it may be registered before IRB approval, but recruitment cannot start until approval is obtained."
+      },
+      {
+        "question": "How often does recruitment status need to be updated?",
+        "answer": "Sponsors must keep the listing current, typically updating within 30 days of a change."
+      }
+    ]
+  },
+  {
+    "section": "Study Type and Intervention Questions",
+    "items": [
+      {
+        "question": "What is an 'Interventional' clinical trial?",
+        "answer": "Participants are prospectively assigned to receive one or more specific interventions (e.g., drugs, devices, procedures) to evaluate their effects on health-related biomedical or behavioral outcomes."
+      },
+      {
+        "question": "How is an 'Observational' study different from an interventional trial?",
+        "answer": "No intervention is assigned; researchers observe participants and measure outcomes without altering treatment or environment."
+      },
+      {
+        "question": "What are 'Patient Registries'?",
+        "answer": "Organized systems that collect uniform data on patients with a specific condition or treatment over time, primarily for observational and long-term follow-up purposes."
+      },
+      {
+        "question": "What are 'Expanded Access' studies?",
+        "answer": "Programs that allow patients to access investigational drugs or treatments outside of clinical trials when no comparable alternatives exist."
+      },
+      {
+        "question": "What is the 'Individual Patient' expanded access?",
+        "answer": "A form of expanded access where investigational treatment is provided to a single patient under compassionate use protocols, often for serious or life-threatening conditions."
+      },
+      {
+        "question": "What is the 'Intermediate-size Population' expanded access?",
+        "answer": "Expanded access for a group of patients larger than a single patient but smaller than a widespread treatment population, often used when some clinical data exist but formal approval is pending."
+      },
+      {
+        "question": "What is 'Treatment IND/Protocol' expanded access?",
+        "answer": "A broader expanded access program under an Investigational New Drug (IND) application or protocol that allows treatment use of an investigational product for a larger patient group outside clinical trials."
+      },
+      {
+        "question": "What types of interventions are common in interventional trials?",
+        "answer": "Drugs, biologics, medical devices, procedures (including surgery), behavioral or dietary interventions, radiation therapy, or strategies to diagnose, prevent, or treat disease."
+      },
+      {
+        "question": "What kinds of outcomes are measured in interventional vs. observational studies?",
+        "answer": "Interventional trials measure effects of assigned interventions on health outcomes; observational studies measure associations or natural progression without intervention."
+      }
+    ]
+  },
+  {
+    "section": "Study Phase Questions",
+    "items": [
+      {
+        "question": "What do the different Phase numbers (I, II, III, IV) mean?",
+        "answer": "Phase I: safety/dosage; Phase II: efficacy/safety; Phase III: confirm effectiveness, compare to standard; Phase IV: post-marketing studies."
+      },
+      {
+        "question": "Are all clinical trials phased, or do some have 'Not Applicable' phase?",
+        "answer": "Non-drug/device studies may have 'Not Applicable' instead of a phase."
+      },
+      {
+        "question": "How does trial phase affect eligibility or trial purpose?",
+        "answer": "Earlier phases have stricter safety criteria; later phases focus on broader populations and final validation."
+      }
+    ]
   }
 ]
